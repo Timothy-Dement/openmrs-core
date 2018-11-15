@@ -160,14 +160,17 @@ public class MigrateAllergiesChangeSet implements CustomTaskChange {
 		stmt.setString(1, globalPropertyName);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
+
+			// BUG FIX 1: Use a prepared statement to resolve the SQL injection vulnerability
+			PreparedStatement conceptStatement = connection.prepareStatement("SELECT concept_id FROM concept WHERE uuid = ?");
 			String uuid = rs.getString("property_value");
-			
-			rs = stmt.executeQuery("SELECT concept_id FROM concept WHERE uuid = '" + uuid + "'");
-			if (rs.next()) {
-				return rs.getInt("concept_id");
+			conceptStatement.setString(1, uuid);
+			ResultSet conceptResultSet = conceptStatement.executeQuery();
+
+			if (conceptResultSet.next()) {
+				return conceptResultSet.getInt("concept_id");
 			}
 		}
-		
 		throw new IllegalStateException("Configuration required: " + globalPropertyName);
 	}
 }

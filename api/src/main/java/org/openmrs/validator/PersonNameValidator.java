@@ -9,6 +9,7 @@
  */
 package org.openmrs.validator;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openmrs.PersonName;
 import org.openmrs.annotation.Handler;
@@ -133,6 +134,14 @@ public class PersonNameValidator implements Validator {
 		        || StringUtils.isBlank(personName.getGivenName().replaceAll("\"", ""))) {
 			errors.rejectValue(getFieldKey("givenName", arrayInd, testInd), "Patient.names.required.given.family");
 		}
+
+		// BUG FIX 2: Encode all PersonName string attributes using the XML 10 escape scheme to resolve the XSS vulnerability
+		personName.setGivenName(StringEscapeUtils.escapeXml10(personName.getGivenName()));
+		personName.setMiddleName(StringEscapeUtils.escapeXml10(personName.getMiddleName()));
+		personName.setFamilyName(StringEscapeUtils.escapeXml10(personName.getFamilyName()));
+		personName.setFamilyName2(StringEscapeUtils.escapeXml10(personName.getFamilyName2()));
+		personName.setFamilyNamePrefix(StringEscapeUtils.escapeXml10(personName.getFamilyNamePrefix()));
+		personName.setFamilyNameSuffix(StringEscapeUtils.escapeXml10(personName.getFamilyNameSuffix()));
 
 		// Make sure the entered name value is sensible 
 		String namePattern = Context.getAdministrationService().getGlobalProperty(

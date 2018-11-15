@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyzer;
@@ -230,7 +231,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param familyName The familyName to set.
 	 */
 	public void setFamilyName(String familyName) {
-		this.familyName = familyName;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.familyName = StringEscapeUtils.escapeXml10(familyName);
 	}
 	
 	/**
@@ -248,7 +250,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param familyName2 The familyName2 to set.
 	 */
 	public void setFamilyName2(String familyName2) {
-		this.familyName2 = familyName2;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.familyName2 = StringEscapeUtils.escapeXml10(familyName2);
 	}
 	
 	/**
@@ -266,7 +269,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param familyNamePrefix The familyNamePrefix to set.
 	 */
 	public void setFamilyNamePrefix(String familyNamePrefix) {
-		this.familyNamePrefix = familyNamePrefix;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.familyNamePrefix = StringEscapeUtils.escapeXml10(familyNamePrefix);
 	}
 	
 	/**
@@ -284,7 +288,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param familyNameSuffix The familyNameSuffix to set.
 	 */
 	public void setFamilyNameSuffix(String familyNameSuffix) {
-		this.familyNameSuffix = familyNameSuffix;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.familyNameSuffix = StringEscapeUtils.escapeXml10(familyNameSuffix);
 	}
 	
 	/**
@@ -302,7 +307,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param givenName The givenName to set.
 	 */
 	public void setGivenName(String givenName) {
-		this.givenName = givenName;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.givenName = StringEscapeUtils.escapeXml10(givenName);
 	}
 	
 	/**
@@ -320,7 +326,8 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param middleName The middleName to set.
 	 */
 	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
+		this.middleName = StringEscapeUtils.escapeXml10(middleName);
 	}
 	
 	/**
@@ -334,6 +341,7 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param person The person to set.
 	 */
 	public void setPerson(Person person) {
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
 		this.person = person;
 	}
 	
@@ -348,6 +356,7 @@ public class PersonName extends BaseChangeableOpenmrsData implements java.io.Ser
 	 * @param personNameId The personNameId to set.
 	 */
 	public void setPersonNameId(Integer personNameId) {
+		// BUG FIX 2: Encode PersonName attributes to mitigate XSS vulnerability
 		this.personNameId = personNameId;
 	}
 	
